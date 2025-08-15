@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Galeri Teman Pensiun | Dokumentasi Kegiatan & Komunitas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="aset/logo-teman-pensiun.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    
+    <style>
+        /* Custom styles untuk halaman galeri */
+        /* Global image border-radius reset */
+        
+        
+        .gallery-hero {
+            background: linear-gradient(135deg, var(--bg) 0%, rgba(248, 188, 68, 0.1) 100%);
+            padding: 120px 0 80px;
+            position: relative;
+        }
+        
+        .gallery-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23f8bc44" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23f8bc44" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="%23f8bc44" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .gallery-hero .container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .gallery-title {
+            color: var(--dark-green);
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .gallery-subtitle {
+            color: var(--muted-green);
+            font-size: 1.3rem;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 40px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: white;
+            border: 2px solid var(--green);
+            color: var(--green);
+            padding: 12px 24px;
+            border-radius: 0;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-width: 120px;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--green);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(19, 86, 49, 0.3);
+        }
+        
+        /* Gallery Grid */
+        .gallery-section {
+            padding: 80px 0;
+            background: var(--bg);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .gallery-card {
+            background: white;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .gallery-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .gallery-card:hover .card-image img {
+            transform: scale(1.05);
+        }
+        
+        .card-image-galeri {
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            
+        }
+        
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gallery-card:hover .card-overlay {
+            opacity: 1;
+        }
+        
+        .view-icon {
+            background: rgba(255,255,255,0.9);
+            color: var(--green);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-card:hover .view-icon {
+            transform: scale(1);
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .card-category {
+            background: var(--gold);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 0;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            color: var(--dark-green);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        
+        .card-description {
+            color: var(--muted-green);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+        
+        /* Modal Styles */
+        .gallery-modal .modal-content {
+            border-radius: 0;
+            border: none;
+            overflow: hidden;
+        }
+        
+        .gallery-modal .modal-header {
+            background: var(--green);
+            color: white;
+            border-bottom: none;
+            padding: 20px 30px;
+        }
+        
+        .gallery-modal .modal-title {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .gallery-modal .btn-close {
+            filter: invert(1);
+            opacity: 0.8;
+        }
+        
+        .gallery-modal .modal-body {
+            padding: 0;
+        }
+        
+        .modal-image {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 0 !important;
+        }
+        
+        .modal-content-text {
+            padding: 30px;
+            background: white;
+        }
+        
+        .modal-category {
+            background: var(--gold);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 0;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            color: var(--dark-green);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .modal-description {
+            color: var(--muted-green);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        /* Pagination */
+        .pagination-section {
+            background: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .pagination .page-link {
+            color: var(--green);
+            border: 2px solid var(--green);
+            margin: 0 5px;
+            border-radius: 0;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .pagination .page-link:hover,
+        .pagination .page-item.active .page-link {
+            background: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .gallery-title {
+                font-size: 2.5rem;
+            }
+            
+            .gallery-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .filter-buttons {
+                gap: 10px;
+            }
+            
+            .filter-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+                min-width: 100px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .card-content {
+                padding: 20px;
+            }
+            
+            .card-title {
+                font-size: 1.2rem;
+            }
+            
+            .card-image {
+                height: 200px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .gallery-hero {
+                padding: 100px 0 60px;
+            }
+            
+            .gallery-title {
+                font-size: 2rem;
+            }
+            
+            .filter-section {
+                padding: 30px 0;
+            }
+            
+            .gallery-section {
+                padding: 60px 0;
+            }
+            
+            .card-image {
+                height: 180px;
+            }
+        }
+        
+        /* Loading Animation */
+        .gallery-card.loading {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--muted-green);
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="aset/logo-teman-pensiun.jpg" alt="Teman Pensiun">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav me-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#artikel">Artikel</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#programs">Program</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="galeri.html">Galeri</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#contact">Kontak</a></li>
+                </ul>
+                <a href="index.html#contact" class="btn btn-primary btn-sm btn-primary-custom btn-highlight ms-lg-3">Get Solution</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gallery-hero">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="gallery-title">Galeri Teman Pensiun</h1>
+                <p class="gallery-subtitle">Dokumentasi kegiatan, komunitas, dan momen berharga dari perjalanan kami bersama para peserta</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="bi bi-grid-3x3-gap me-2"></i>Semua
+                </button>
+                <button class="filter-btn" data-filter="workshop">
+                    <i class="bi bi-easel me-2"></i>Workshop
+                </button>
+                <button class="filter-btn" data-filter="komunitas">
+                    <i class="bi bi-people me-2"></i>Komunitas
+                </button>
+                <button class="filter-btn" data-filter="bisnis">
+                    <i class="bi bi-briefcase me-2"></i>Bisnis Alumni
+                </button>
+                <button class="filter-btn" data-filter="testimoni">
+                    <i class="bi bi-chat-quote me-2"></i>Testimoni
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Workshop Items -->
+                <div class="gallery-card" data-category="workshop" onclick="openModal(0)">
+                    <div class="card-image-galeri">
+                        <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=500&h=300&fit=crop" alt="Workshop Financial Planning">
+                        <div class="card-overlay">
+                            <div class="view-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Workshop</span>
+                        <h3 class="card-title">Workshop Financial Planning</h3>
+                        <p class="card-description">Sesi pelatihan perencanaan keuangan untuk masa pensiun yang aman dan nyaman.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-category="workshop" onclick="openModal(1)">
+                    <div class="card-image-galeri">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=300&fit=crop" alt="Kelas Mindset Positif">
+                        <div class="card-overlay">
+                            <div class="view-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Workshop</span>
+                        <h3 class="card-title">Kelas Mindset Positif</h3>
+                        <p class="card-description">Membangun pola pikir bahagia dan produktif untuk masa pensiun yang bermakna.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-category="workshop" onclick="openModal(2)">
+                    <div class="card-image-galeri">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&h=300&fit=crop" alt="Pelatihan Bisnis">
+                        <div class="card-overlay">
+                            <div class="view-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Workshop</span>
+                        <h3 class="card-title">Pelatihan Bisnis</h3>
+                        <p class="card-description">Strategi membangun usaha ringan untuk penghasilan tambahan di masa pensiun.</p>
+                    </div>
+                </div>
+
+                <!-- Komunitas Items -->
+                <div class="gallery-card" data-category="komunitas" onclick="openModal(3)">
+                    <div class="card-image-galeri">
+                        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&h=300&fit=crop" alt="Gathering Alumni">
+                        <div class="card-overlay">
+                            <div class="view-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Komunitas</span>
+                        <h3 class="card-title">Gathering Alumni</h3>
+                        <p class="card-description">Pertemuan rutin komunitas Teman Pensiun untuk berbagi pengalaman dan inspirasi.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-category="komunitas" onclick="openModal(4)">
+                    <div class="card-image-galeri">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&h=300&fit=crop" alt="Networking Session">
+                        <div class="card-overlay">
+                            <div class="view-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Komunitas</span>
+                        <h3 class="card-title">Networking Session</h3>
+                        <p class="card-description">Sesi networking untuk memperluas relasi dan peluang kolaborasi bisnis.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-category="komunitas" onclick="openModal(5)">
+                    <div class="card-image-galeri">
+                        <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=500&h=300&fit=crop" alt="Kegiatan Sosial">
+                        <div class="card-overlay">
+                            <div class="view-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Komunitas</span>
+                        <h3 class="card-title">Kegiatan Sosial</h3>
+                        <p class="card-description">Aktivitas sosial bersama untuk memberikan manfaat kepada masyarakat.</p>
+                    </div>
+                </div>
+
+                <!-- Bisnis Alumni Items -->
+                <div class="gallery-card" data-category="bisnis" onclick="openModal(6)">
+                    <div class="card-image-galeri">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop" alt="Usaha Kuliner">
+                        <div class="card-overlay">
+                            <div class="view-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Bisnis Alumni</span>
+                        <h3 class="card-title">Usaha Kuliner</h3>
+                        <p class="card-description">Bisnis kuliner rumahan yang dikembangkan oleh alumni program Teman Pensiun.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-category="bisnis" onclick="openModal(7)">
+                    <div class="card-image-galeri">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop" alt="Toko Online">
+                        <div class="card-overlay">
+                            <div class="view-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Bisnis Alumni</span>
+                        <h3 class="card-title">Toko Online</h3>
+                        <p class="card-description">E-commerce yang berhasil dikembangkan dengan bimbingan mentor Teman Pensiun.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-category="bisnis" onclick="openModal(8)">
+                    <div class="card-image-galeri">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop" alt="Jasa Konsultasi">
+                        <div class="card-overlay">
+                            <div class="view-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Bisnis Alumni</span>
+                        <h3 class="card-title">Jasa Konsultasi</h3>
+                        <p class="card-description">Layanan konsultasi yang dibangun berdasarkan pengalaman dan keahlian.</p>
+                    </div>
+                </div>
+
+                <!-- Testimoni Items -->
+                <div class="gallery-card" data-category="testimoni" onclick="openModal(9)">
+                    <div class="card-image-galeri">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=300&fit=crop" alt="Testimoni Pak Ahmad">
+                        <div class="card-overlay">
+                            <div class="view-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Testimoni</span>
+                        <h3 class="card-title">Pak Ahmad, 58 tahun</h3>
+                        <p class="card-description">"Teman Pensiun membantu saya merencanakan masa pensiun dengan lebih baik."</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-category="testimoni" onclick="openModal(10)">
+                    <div class="card-image-galeri">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=500&h=300&fit=crop" alt="Testimoni Bu Siti">
+                        <div class="card-overlay">
+                            <div class="view-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Testimoni</span>
+                        <h3 class="card-title">Bu Siti, 55 tahun</h3>
+                        <p class="card-description">"Sekarang saya punya bisnis kecil yang memberikan penghasilan tambahan."</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-category="testimoni" onclick="openModal(11)">
+                    <div class="card-image-galeri">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&h=300&fit=crop" alt="Testimoni Pak Budi">
+                        <div class="card-overlay">
+                            <div class="view-icon">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Testimoni</span>
+                        <h3 class="card-title">Pak Budi, 62 tahun</h3>
+                        <p class="card-description">"Mindset saya berubah total, sekarang lebih optimis menghadapi masa pensiun."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="bi bi-images"></i>
+                <h3>Tidak ada foto</h3>
+                <p>Belum ada foto untuk kategori yang dipilih.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pagination Section -->
+    <section class="pagination-section">
+        <div class="container">
+            <nav aria-label="Gallery pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row gy-4">
+                <!-- Logo & Deskripsi -->
+                <div class="col-lg-4 col-md-6">
+                    <img src="aset/logo-teman-pensiun.jpg" alt="Teman Pensiun" class="footer-logo mb-3">
+                    <p class="footer-desc">
+                        Teman Pensiun membantu Anda mempersiapkan masa pensiun yang aman, sehat, dan produktif melalui pelatihan finansial, mindset, dan pemanfaatan aset.
+                    </p>
+                </div>
+
+                <!-- Navigasi Cepat -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title">Navigasi</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html#about">Tentang Kami</a></li>
+                        <li><a href="index.html#program">Program</a></li>
+                        <li><a href="index.html#pension-info">Persiapan Pensiun</a></li>
+                        <li><a href="galeri.html">Galeri</a></li>
+                        <li><a href="index.html#contact">Kontak</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kontak -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Kontak Kami</h5>
+                    <ul class="footer-contact">
+                        <li><i class="bi bi-telephone-fill"></i> 0812-3456-7890</li>
+                        <li><i class="bi bi-envelope-fill"></i> info@temanpensiun.com</li>
+                        <li><i class="bi bi-geo-alt-fill"></i> Jl. Pensiun Bahagia No.12, Jakarta</li>
+                    </ul>
+                </div>
+
+                <!-- Sosial Media -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Ikuti Kami</h5>
+                    <div class="footer-social">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 Teman Pensiun. Semua Hak Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Gallery Modal -->
+    <div class="modal fade gallery-modal" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="galleryModalLabel">Judul Foto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="" alt="Gallery Image" class="modal-image" id="modalImage">
+                    <div class="modal-content-text">
+                        <span class="modal-category" id="modalCategory">Kategori</span>
+                        <h3 class="modal-title" id="modalTitle">Judul Foto</h3>
+                        <p class="modal-description" id="modalDescription">Deskripsi foto akan ditampilkan di sini.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    
+    <script>
+        // Gallery data
+        const galleryData = [
+            {
+                image: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&h=600&fit=crop",
+                category: "Workshop",
+                title: "Workshop Financial Planning",
+                description: "Sesi pelatihan perencanaan keuangan untuk masa pensiun yang aman dan nyaman. Peserta belajar tentang investasi, asuransi, dan strategi pengelolaan keuangan pribadi untuk memastikan masa pensiun yang sejahtera."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop",
+                category: "Workshop",
+                title: "Kelas Mindset Positif",
+                description: "Membangun pola pikir bahagia dan produktif untuk masa pensiun yang bermakna. Peserta diajak untuk mengubah perspektif tentang masa pensiun dari masa istirahat menjadi masa produktif yang penuh makna."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop",
+                category: "Workshop",
+                title: "Pelatihan Bisnis",
+                description: "Strategi membangun usaha ringan untuk penghasilan tambahan di masa pensiun. Peserta belajar tentang ide bisnis yang cocok untuk usia pensiun dan cara mengelolanya dengan efektif."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=600&fit=crop",
+                category: "Komunitas",
+                title: "Gathering Alumni",
+                description: "Pertemuan rutin komunitas Teman Pensiun untuk berbagi pengalaman dan inspirasi. Acara ini menjadi ajang silaturahmi dan networking antar alumni program."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop",
+                category: "Komunitas",
+                title: "Networking Session",
+                description: "Sesi networking untuk memperluas relasi dan peluang kolaborasi bisnis. Peserta dapat bertemu dengan berbagai profesional dan pengusaha dari berbagai bidang."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&h=600&fit=crop",
+                category: "Komunitas",
+                title: "Kegiatan Sosial",
+                description: "Aktivitas sosial bersama untuk memberikan manfaat kepada masyarakat. Program ini mengajak alumni untuk berkontribusi positif kepada lingkungan sekitar."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
+                category: "Bisnis Alumni",
+                title: "Usaha Kuliner",
+                description: "Bisnis kuliner rumahan yang dikembangkan oleh alumni program Teman Pensiun. Usaha ini berhasil memberikan penghasilan tambahan yang signifikan."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
+                category: "Bisnis Alumni",
+                title: "Toko Online",
+                description: "E-commerce yang berhasil dikembangkan dengan bimbingan mentor Teman Pensiun. Bisnis ini memanfaatkan teknologi digital untuk mencapai pasar yang lebih luas."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
+                category: "Bisnis Alumni",
+                title: "Jasa Konsultasi",
+                description: "Layanan konsultasi yang dibangun berdasarkan pengalaman dan keahlian. Alumni berhasil mengembangkan bisnis jasa yang memberikan nilai tambah kepada klien."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop",
+                category: "Testimoni",
+                title: "Pak Ahmad, 58 tahun",
+                description: "\"Teman Pensiun membantu saya merencanakan masa pensiun dengan lebih baik. Sekarang saya merasa lebih tenang dan siap menghadapi masa pensiun dengan persiapan yang matang.\""
+            },
+            {
+                image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop",
+                category: "Testimoni",
+                title: "Bu Siti, 55 tahun",
+                description: "\"Sekarang saya punya bisnis kecil yang memberikan penghasilan tambahan. Program Teman Pensiun benar-benar mengubah hidup saya menjadi lebih produktif dan mandiri.\""
+            },
+            {
+                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&h=600&fit=crop",
+                category: "Testimoni",
+                title: "Pak Budi, 62 tahun",
+                description: "\"Mindset saya berubah total, sekarang lebih optimis menghadapi masa pensiun. Saya merasa masih punya banyak hal yang bisa dilakukan dan dikontribusikan.\""
+            }
+        ];
+
+        // Filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryCards = document.querySelectorAll('.gallery-card');
+            const emptyState = document.getElementById('emptyState');
+            const galleryGrid = document.getElementById('galleryGrid');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Show loading animation
+                    galleryCards.forEach(card => card.classList.add('loading'));
+                    
+                    setTimeout(() => {
+                        let visibleCount = 0;
+                        
+                        galleryCards.forEach(card => {
+                            card.classList.remove('loading');
+                            const category = card.getAttribute('data-category');
+                            
+                            if (filter === 'all' || category === filter) {
+                                card.style.display = 'block';
+                                visibleCount++;
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+
+                        // Show/hide empty state
+                        if (visibleCount === 0) {
+                            emptyState.style.display = 'block';
+                            galleryGrid.style.display = 'none';
+                        } else {
+                            emptyState.style.display = 'none';
+                            galleryGrid.style.display = 'grid';
+                        }
+                    }, 300);
+                });
+            });
+        });
+
+        // Modal functionality
+        function openModal(index) {
+            const data = galleryData[index];
+            const modal = new bootstrap.Modal(document.getElementById('galleryModal'));
+            
+            document.getElementById('modalImage').src = data.image;
+            document.getElementById('modalCategory').textContent = data.category;
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalDescription').textContent = data.description;
+            document.getElementById('galleryModalLabel').textContent = data.title;
+            
+            modal.show();
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 249, 235, 0.98)';
+                navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+            } else {
+                navbar.style.background = 'linear-gradient(90deg, rgba(255,249,235,0.95), rgba(255,249,235,0.8))';
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            }
+        });
+
+        // Add hover effects for better UX
+        document.querySelectorAll('.gallery-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html> 
