@@ -17,6 +17,7 @@
         .gallery-hero {
             background: linear-gradient(135deg, var(--bg) 0%, rgba(248, 188, 68, 0.1) 100%);
             padding: 120px 0 80px;
+            margin-top: 80px; /* Tambahan margin untuk navbar */
             position: relative;
         }
         
@@ -97,6 +98,7 @@
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
             margin-top: 50px;
+            transition: all 0.3s ease;
         }
         
         .gallery-card {
@@ -274,10 +276,20 @@
             text-align: center;
         }
         
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
         .pagination .page-link {
             color: var(--green);
             border: 2px solid var(--green);
-            margin: 0 5px;
+            margin: 0;
             border-radius: 0;
             width: 45px;
             height: 45px;
@@ -286,6 +298,8 @@
             justify-content: center;
             font-weight: 600;
             transition: all 0.3s ease;
+            text-decoration: none;
+            background: white;
         }
         
         .pagination .page-link:hover,
@@ -293,6 +307,21 @@
             background: var(--green);
             color: white;
             transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(19, 86, 49, 0.3);
+        }
+        
+        .pagination .page-item.disabled .page-link {
+            color: #ccc;
+            border-color: #ccc;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        .pagination .page-item.disabled .page-link:hover {
+            background: white;
+            color: #ccc;
+            transform: none;
+            box-shadow: none;
         }
         
         /* Responsive Design */
@@ -331,11 +360,22 @@
             .card-image {
                 height: 200px;
             }
+            
+            .pagination .page-link {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+            }
+            
+            .gallery-hero {
+                margin-top: 70px; /* Margin yang lebih kecil untuk tablet */
+            }
         }
         
         @media (max-width: 576px) {
             .gallery-hero {
                 padding: 100px 0 60px;
+                margin-top: 60px; /* Margin yang lebih kecil untuk mobile */
             }
             
             .gallery-title {
@@ -352,6 +392,16 @@
             
             .card-image {
                 height: 180px;
+            }
+            
+            .pagination .page-link {
+                width: 35px;
+                height: 35px;
+                font-size: 12px;
+            }
+            
+            .pagination {
+                gap: 3px;
             }
         }
         
@@ -397,13 +447,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navMenu">
                 <ul class="navbar-nav me-auto align-items-lg-center">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="index.html#artikel">Artikel</a></li>
                     <li class="nav-item"><a class="nav-link" href="index.html#programs">Program</a></li>
                     <li class="nav-item"><a class="nav-link active" href="galeri.html">Galeri</a></li>
                     <li class="nav-item"><a class="nav-link" href="index.html#contact">Kontak</a></li>
                 </ul>
-                <a href="index.html#contact" class="btn btn-primary btn-sm btn-primary-custom btn-highlight ms-lg-3">Get Solution</a>
+                <a href="https://api.whatsapp.com/send/?phone=6281214618525" target="_blank" class="btn btn-primary btn-sm btn-primary-custom btn-highlight ms-lg-3">Get Solution</a>
             </div>
         </div>
     </nav>
@@ -445,201 +495,7 @@
     <section class="gallery-section">
         <div class="container">
             <div class="gallery-grid" id="galleryGrid">
-                <!-- Workshop Items -->
-                <div class="gallery-card" data-category="workshop" onclick="openModal(0)">
-                    <div class="card-image-galeri">
-                        <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=500&h=300&fit=crop" alt="Workshop Financial Planning">
-                        <div class="card-overlay">
-                            <div class="view-icon">
-                                <i class="bi bi-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">Workshop</span>
-                        <h3 class="card-title">Workshop Financial Planning</h3>
-                        <p class="card-description">Sesi pelatihan perencanaan keuangan untuk masa pensiun yang aman dan nyaman.</p>
-                    </div>
-                </div>
-
-                <div class="gallery-card" data-category="workshop" onclick="openModal(1)">
-                    <div class="card-image-galeri">
-                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=300&fit=crop" alt="Kelas Mindset Positif">
-                        <div class="card-overlay">
-                            <div class="view-icon">
-                                <i class="bi bi-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">Workshop</span>
-                        <h3 class="card-title">Kelas Mindset Positif</h3>
-                        <p class="card-description">Membangun pola pikir bahagia dan produktif untuk masa pensiun yang bermakna.</p>
-                    </div>
-                </div>
-
-                <div class="gallery-card" data-category="workshop" onclick="openModal(2)">
-                    <div class="card-image-galeri">
-                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&h=300&fit=crop" alt="Pelatihan Bisnis">
-                        <div class="card-overlay">
-                            <div class="view-icon">
-                                <i class="bi bi-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">Workshop</span>
-                        <h3 class="card-title">Pelatihan Bisnis</h3>
-                        <p class="card-description">Strategi membangun usaha ringan untuk penghasilan tambahan di masa pensiun.</p>
-                    </div>
-                </div>
-
-                <!-- Komunitas Items -->
-                <div class="gallery-card" data-category="komunitas" onclick="openModal(3)">
-                    <div class="card-image-galeri">
-                        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&h=300&fit=crop" alt="Gathering Alumni">
-                        <div class="card-overlay">
-                            <div class="view-icon">
-                                <i class="bi bi-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">Komunitas</span>
-                        <h3 class="card-title">Gathering Alumni</h3>
-                        <p class="card-description">Pertemuan rutin komunitas Teman Pensiun untuk berbagi pengalaman dan inspirasi.</p>
-                    </div>
-                </div>
-
-                <div class="gallery-card" data-category="komunitas" onclick="openModal(4)">
-                    <div class="card-image-galeri">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&h=300&fit=crop" alt="Networking Session">
-                        <div class="card-overlay">
-                            <div class="view-icon">
-                                <i class="bi bi-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">Komunitas</span>
-                        <h3 class="card-title">Networking Session</h3>
-                        <p class="card-description">Sesi networking untuk memperluas relasi dan peluang kolaborasi bisnis.</p>
-                    </div>
-                </div>
-
-                <div class="gallery-card" data-category="komunitas" onclick="openModal(5)">
-                    <div class="card-image-galeri">
-                        <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=500&h=300&fit=crop" alt="Kegiatan Sosial">
-                        <div class="card-overlay">
-                            <div class="view-icon">
-                                <i class="bi bi-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">Komunitas</span>
-                        <h3 class="card-title">Kegiatan Sosial</h3>
-                        <p class="card-description">Aktivitas sosial bersama untuk memberikan manfaat kepada masyarakat.</p>
-                    </div>
-                </div>
-
-                <!-- Bisnis Alumni Items -->
-                <div class="gallery-card" data-category="bisnis" onclick="openModal(6)">
-                    <div class="card-image-galeri">
-                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop" alt="Usaha Kuliner">
-                        <div class="card-overlay">
-                            <div class="view-icon">
-                                <i class="bi bi-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">Bisnis Alumni</span>
-                        <h3 class="card-title">Usaha Kuliner</h3>
-                        <p class="card-description">Bisnis kuliner rumahan yang dikembangkan oleh alumni program Teman Pensiun.</p>
-                    </div>
-                </div>
-
-                <div class="gallery-card" data-category="bisnis" onclick="openModal(7)">
-                    <div class="card-image-galeri">
-                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop" alt="Toko Online">
-                        <div class="card-overlay">
-                            <div class="view-icon">
-                                <i class="bi bi-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">Bisnis Alumni</span>
-                        <h3 class="card-title">Toko Online</h3>
-                        <p class="card-description">E-commerce yang berhasil dikembangkan dengan bimbingan mentor Teman Pensiun.</p>
-                    </div>
-                </div>
-
-                <div class="gallery-card" data-category="bisnis" onclick="openModal(8)">
-                    <div class="card-image-galeri">
-                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop" alt="Jasa Konsultasi">
-                        <div class="card-overlay">
-                            <div class="view-icon">
-                                <i class="bi bi-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">Bisnis Alumni</span>
-                        <h3 class="card-title">Jasa Konsultasi</h3>
-                        <p class="card-description">Layanan konsultasi yang dibangun berdasarkan pengalaman dan keahlian.</p>
-                    </div>
-                </div>
-
-                <!-- Testimoni Items -->
-                <div class="gallery-card" data-category="testimoni" onclick="openModal(9)">
-                    <div class="card-image-galeri">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=300&fit=crop" alt="Testimoni Pak Ahmad">
-                        <div class="card-overlay">
-                            <div class="view-icon">
-                                <i class="bi bi-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">Testimoni</span>
-                        <h3 class="card-title">Pak Ahmad, 58 tahun</h3>
-                        <p class="card-description">"Teman Pensiun membantu saya merencanakan masa pensiun dengan lebih baik."</p>
-                    </div>
-                </div>
-
-                <div class="gallery-card" data-category="testimoni" onclick="openModal(10)">
-                    <div class="card-image-galeri">
-                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=500&h=300&fit=crop" alt="Testimoni Bu Siti">
-                        <div class="card-overlay">
-                            <div class="view-icon">
-                                <i class="bi bi-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">Testimoni</span>
-                        <h3 class="card-title">Bu Siti, 55 tahun</h3>
-                        <p class="card-description">"Sekarang saya punya bisnis kecil yang memberikan penghasilan tambahan."</p>
-                    </div>
-                </div>
-
-                <div class="gallery-card" data-category="testimoni" onclick="openModal(11)">
-                    <div class="card-image-galeri">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&h=300&fit=crop" alt="Testimoni Pak Budi">
-                        <div class="card-overlay">
-                            <div class="view-icon">
-                                <i class="bi bi-eye"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">Testimoni</span>
-                        <h3 class="card-title">Pak Budi, 62 tahun</h3>
-                        <p class="card-description">"Mindset saya berubah total, sekarang lebih optimis menghadapi masa pensiun."</p>
-                    </div>
-                </div>
+                <!-- Gallery cards will be dynamically generated here -->
             </div>
 
             <!-- Empty State -->
@@ -690,11 +546,11 @@
                 <div class="col-lg-2 col-md-6">
                     <h5 class="footer-title">Navigasi</h5>
                     <ul class="footer-links">
-                        <li><a href="index.html#about">Tentang Kami</a></li>
-                        <li><a href="index.html#program">Program</a></li>
-                        <li><a href="index.html#pension-info">Persiapan Pensiun</a></li>
-                        <li><a href="galeri.html">Galeri</a></li>
-                        <li><a href="index.html#contact">Kontak</a></li>
+                        <li><a href="index.html#about">Home</a></li>
+                        <li><a href="index.html#program">Article</a></li>
+                        <li><a href="index.html#pension-info">Program</a></li>
+                        <li><a href="galeri.html">Galery</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
                     </ul>
                 </div>
 
@@ -712,9 +568,9 @@
                 <div class="col-lg-3 col-md-6">
                     <h5 class="footer-title">Ikuti Kami</h5>
                     <div class="footer-social">
-                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <!--<a href="#"><i class="bi bi-tiktok"></i></a>-->
                         <a href="#"><i class="bi bi-instagram"></i></a>
-                        <a href="#"><i class="bi bi-youtube"></i></a>
+                        <!--<a href="#"><i class="bi bi-youtube"></i></a>-->
                     </div>
                 </div>
             </div>
@@ -822,55 +678,301 @@
                 category: "Testimoni",
                 title: "Pak Budi, 62 tahun",
                 description: "\"Mindset saya berubah total, sekarang lebih optimis menghadapi masa pensiun. Saya merasa masih punya banyak hal yang bisa dilakukan dan dikontribusikan.\""
-            }
+            },
+            // Tambahan data untuk testing pagination
+            {
+                image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop",
+                category: "Workshop",
+                title: "Workshop Kesehatan Lansia",
+                description: "Pelatihan khusus untuk menjaga kesehatan fisik dan mental di masa pensiun. Peserta belajar tentang nutrisi, olahraga ringan, dan teknik relaksasi."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&h=600&fit=crop",
+                category: "Workshop",
+                title: "Kelas Teknologi Digital",
+                description: "Pembelajaran penggunaan teknologi modern untuk memudahkan aktivitas sehari-hari dan membuka peluang bisnis online."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&h=600&fit=crop",
+                category: "Komunitas",
+                title: "Kunjungan Wisata Bersama",
+                description: "Aktivitas rekreasi dan refreshing bersama komunitas untuk mempererat tali silaturahmi antar anggota."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop",
+                category: "Komunitas",
+                title: "Diskusi Kelompok",
+                description: "Forum diskusi rutin untuk berbagi pengalaman dan solusi dalam menghadapi tantangan masa pensiun."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
+                category: "Bisnis Alumni",
+                title: "Usaha Kerajinan",
+                description: "Bisnis kerajinan tangan yang dikembangkan dengan kreativitas dan ketekunan, menghasilkan produk unik bernilai tinggi."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
+                category: "Bisnis Alumni",
+                title: "Layanan Fotografi",
+                description: "Jasa fotografi yang memanfaatkan hobi dan keahlian untuk menghasilkan pendapatan tambahan yang menyenangkan."
+            },
+            {
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop",
+                category: "Testimoni",
+                title: "Pak Rudi, 60 tahun",
+                description: "\"Berkat Teman Pensiun, saya sekarang punya komunitas yang mendukung dan bisnis kecil yang berkembang.\""
+            },
+            {
+                image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop",
+                category: "Testimoni",
+                title: "Bu Rina, 57 tahun",
+                description: "\"Program ini mengajarkan saya bahwa pensiun bukan akhir, tapi awal dari petualangan baru yang lebih menyenangkan.\""
+            },
+            {
+                image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop",
+                category: "Testimoni",
+                title: "Bu Rina, 57 tahun",
+                description: "\"Program ini mengajarkan saya bahwa pensiun bukan akhir, tapi awal dari petualangan baru yang lebih menyenangkan.\""
+            },
+            {
+                image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop",
+                category: "Testimoni",
+                title: "Bu Rina, 57 tahun",
+                description: "\"Program ini mengajarkan saya bahwa pensiun bukan akhir, tapi awal dari petualangan baru yang lebih menyenangkan.\""
+            },
+            {
+                image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop",
+                category: "Testimoni",
+                title: "Bu Rina, 57 tahun",
+                description: "\"Program ini mengajarkan saya bahwa pensiun bukan akhir, tapi awal dari petualangan baru yang lebih menyenangkan.\""
+            },
+            {
+                image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop",
+                category: "Testimoni",
+                title: "Bu Rina, 57 tahun",
+                description: "\"Program ini mengajarkan saya bahwa pensiun bukan akhir, tapi awal dari petualangan baru yang lebih menyenangkan.\""
+            },
+            {
+                image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop",
+                category: "Testimoni",
+                title: "Bu Rina, 57 tahun",
+                description: "\"Program ini mengajarkan saya bahwa pensiun bukan akhir, tapi awal dari petualangan baru yang lebih menyenangkan.\""
+            },
+            {
+                image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop",
+                category: "Testimoni",
+                title: "Bu Rina, 57 tahun",
+                description: "\"Program ini mengajarkan saya bahwa pensiun bukan akhir, tapi awal dari petualangan baru yang lebih menyenangkan.\""
+            },
+            {
+                image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop",
+                category: "Testimoni",
+                title: "Bu Rina, 57 tahun",
+                description: "\"Program ini mengajarkan saya bahwa pensiun bukan akhir, tapi awal dari petualangan baru yang lebih menyenangkan.\""
+            },
         ];
 
-        // Filter functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const galleryCards = document.querySelectorAll('.gallery-card');
-            const emptyState = document.getElementById('emptyState');
-            const galleryGrid = document.getElementById('galleryGrid');
+        // Pagination variables
+        let currentPage = 1;
+        let itemsPerPage = 6;
+        let currentFilter = 'all';
+        let filteredData = [...galleryData];
 
+        // Initialize gallery
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeGallery();
+            setupEventListeners();
+        });
+
+        function initializeGallery() {
+            updateGalleryDisplay();
+            updatePagination();
+        }
+
+        function setupEventListeners() {
+            // Filter buttons
+            const filterButtons = document.querySelectorAll('.filter-btn');
             filterButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    // Remove active class from all buttons
                     filterButtons.forEach(btn => btn.classList.remove('active'));
-                    // Add active class to clicked button
                     this.classList.add('active');
-
-                    const filter = this.getAttribute('data-filter');
                     
-                    // Show loading animation
-                    galleryCards.forEach(card => card.classList.add('loading'));
+                    currentFilter = this.getAttribute('data-filter');
+                    currentPage = 1; // Reset to first page when filtering
                     
-                    setTimeout(() => {
-                        let visibleCount = 0;
-                        
-                        galleryCards.forEach(card => {
-                            card.classList.remove('loading');
-                            const category = card.getAttribute('data-category');
-                            
-                            if (filter === 'all' || category === filter) {
-                                card.style.display = 'block';
-                                visibleCount++;
-                            } else {
-                                card.style.display = 'none';
-                            }
-                        });
-
-                        // Show/hide empty state
-                        if (visibleCount === 0) {
-                            emptyState.style.display = 'block';
-                            galleryGrid.style.display = 'none';
-                        } else {
-                            emptyState.style.display = 'none';
-                            galleryGrid.style.display = 'grid';
-                        }
-                    }, 300);
+                    filterGallery();
                 });
             });
-        });
+
+            // Pagination buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('page-link')) {
+                    e.preventDefault();
+                    const pageText = e.target.textContent.trim();
+                    const pageIcon = e.target.querySelector('i');
+                    
+                    // Check for previous button (icon or text)
+                    if (pageText === '‹' || pageText === '‹‹' || 
+                        (pageIcon && pageIcon.classList.contains('bi-chevron-left'))) {
+                        // Previous button
+                        if (currentPage > 1) {
+                            currentPage--;
+                            updateGalleryDisplay();
+                            updatePagination();
+                        }
+                    } else if (pageText === '›' || pageText === '››' || 
+                               (pageIcon && pageIcon.classList.contains('bi-chevron-right'))) {
+                        // Next button
+                        const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+                        if (currentPage < totalPages) {
+                            currentPage++;
+                            updateGalleryDisplay();
+                            updatePagination();
+                        }
+                    } else if (!isNaN(pageText)) {
+                        // Number button
+                        const pageNumber = parseInt(pageText);
+                        currentPage = pageNumber;
+                        updateGalleryDisplay();
+                        updatePagination();
+                    }
+                }
+            });
+        }
+
+        function filterGallery() {
+            if (currentFilter === 'all') {
+                filteredData = [...galleryData];
+            } else {
+                filteredData = galleryData.filter(item => {
+                    const categoryMap = {
+                        'workshop': 'Workshop',
+                        'komunitas': 'Komunitas',
+                        'bisnis': 'Bisnis Alumni',
+                        'testimoni': 'Testimoni'
+                    };
+                    return item.category === categoryMap[currentFilter];
+                });
+            }
+            
+            updateGalleryDisplay();
+            updatePagination();
+        }
+
+        function updateGalleryDisplay() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (filteredData.length === 0) {
+                galleryGrid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            galleryGrid.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            // Show loading animation
+            galleryGrid.style.opacity = '0.6';
+            galleryGrid.style.transform = 'scale(0.98)';
+            
+            setTimeout(() => {
+                // Calculate start and end indices for current page
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const currentPageData = filteredData.slice(startIndex, endIndex);
+
+                // Clear existing content
+                galleryGrid.innerHTML = '';
+
+                // Add cards for current page
+                currentPageData.forEach((item, index) => {
+                    const globalIndex = startIndex + index;
+                    const card = createGalleryCard(item, globalIndex);
+                    galleryGrid.appendChild(card);
+                });
+
+                // Remove loading animation
+                galleryGrid.style.opacity = '1';
+                galleryGrid.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function createGalleryCard(item, index) {
+            const card = document.createElement('div');
+            card.className = 'gallery-card';
+            card.setAttribute('data-category', item.category.toLowerCase().replace(' ', '-'));
+            card.onclick = () => openModal(index);
+
+            card.innerHTML = `
+                <div class="card-image-galeri">
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="card-overlay">
+                        <div class="view-icon">
+                            <i class="bi bi-eye"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <span class="card-category">${item.category}</span>
+                    <h3 class="card-title">${item.title}</h3>
+                    <p class="card-description">${item.description.substring(0, 100)}${item.description.length > 100 ? '...' : ''}</p>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            const paginationContainer = document.querySelector('.pagination');
+            
+            if (totalPages <= 1) {
+                paginationContainer.style.display = 'none';
+                return;
+            }
+
+            paginationContainer.style.display = 'flex';
+            
+            // Clear existing pagination
+            paginationContainer.innerHTML = '';
+
+            // Previous button
+            const prevLi = document.createElement('li');
+            prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+            prevLi.innerHTML = `
+                <a class="page-link" href="#" ${currentPage === 1 ? 'tabindex="-1" aria-disabled="true"' : ''}>
+                    <i class="bi bi-chevron-left"></i>
+                </a>
+            `;
+            paginationContainer.appendChild(prevLi);
+
+            // Page numbers
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const pageLi = document.createElement('li');
+                pageLi.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                pageLi.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                paginationContainer.appendChild(pageLi);
+            }
+
+            // Next button
+            const nextLi = document.createElement('li');
+            nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+            nextLi.innerHTML = `
+                <a class="page-link" href="#" ${currentPage === totalPages ? 'tabindex="-1" aria-disabled="true"' : ''}>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            `;
+            paginationContainer.appendChild(nextLi);
+        }
 
         // Modal functionality
         function openModal(index) {
@@ -913,14 +1015,18 @@
         });
 
         // Add hover effects for better UX
-        document.querySelectorAll('.gallery-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
+        document.addEventListener('mouseover', function(e) {
+            if (e.target.closest('.gallery-card')) {
+                const card = e.target.closest('.gallery-card');
+                card.style.transform = 'translateY(-10px) scale(1.02)';
+            }
+        });
+
+        document.addEventListener('mouseout', function(e) {
+            if (e.target.closest('.gallery-card')) {
+                const card = e.target.closest('.gallery-card');
+                card.style.transform = 'translateY(0) scale(1)';
+            }
         });
     </script>
 </body>
