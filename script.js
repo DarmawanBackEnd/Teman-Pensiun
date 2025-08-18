@@ -11,19 +11,35 @@
       });
 
       // Simple form handling (no backend) -> show friendly message
-      document.getElementById('contactForm').addEventListener('submit', function(e){
-        e.preventDefault();
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const interest = document.getElementById('interest').value;
-        if(!name || !email || !interest){
-          alert('Mohon lengkapi data yang diminta.');
-          return;
-        }
-        // Simulate submission
-        this.reset();
-        alert('Terima kasih ' + name + '! Tim Teman Pensiun akan menghubungi via email: ' + email + ' untuk langkah selanjutnya.');
-      });
+      
+document.getElementById("contactForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  // Ambil nilai input
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
+  const age = document.getElementById("age").value;
+  const interest = document.getElementById("interest").value;
+  const message = document.getElementById("message").value;
+
+  // Nomor WhatsApp tujuan (ganti dengan nomor admin kamu, format 62 untuk Indonesia)
+  const whatsappNumber = "6287771953376";
+
+  // Susun pesan
+  let whatsappMessage = `Halo Admin Teman Pensiun,%0ASaya ingin mendaftar pelatihan.%0A%0A`;
+  whatsappMessage += ` Nama: ${name}%0A`;
+  whatsappMessage += ` Email: ${email}%0A`;
+  whatsappMessage += ` Telepon: ${phone ? phone : "-"}%0A`;
+  whatsappMessage += ` Usia: ${age ? age : "-"}%0A`;
+  whatsappMessage += ` Alasan Ikut: ${interest}%0A`;
+  whatsappMessage += ` Pesan Tambahan: ${message ? message : "-"}%0A`;
+
+  // Redirect ke WhatsApp
+  window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, "_blank");
+});
+
+
 
     const slideContainer = document.querySelector(".slide-container");
       console.log("Looking for slide-container:", slideContainer);
