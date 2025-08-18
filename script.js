@@ -24,7 +24,7 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
   const message = document.getElementById("message").value;
 
   // Nomor WhatsApp tujuan (ganti dengan nomor admin kamu, format 62 untuk Indonesia)
-  const whatsappNumber = "6287771953376";
+  const whatsappNumber = "6281214618525";
 
   // Susun pesan
   let whatsappMessage = `Halo Admin Teman Pensiun,%0ASaya ingin mendaftar pelatihan.%0A%0A`;
