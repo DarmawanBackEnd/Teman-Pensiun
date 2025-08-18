@@ -155,14 +155,19 @@
             document.getElementById('popup-title').textContent = article.title;
             document.getElementById('popup-content-text').innerHTML = article.content;
             popup.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            document.body.classList.add('popup-open');
         }
     }
 
     function closeArticlePopup() {
         const popup = document.getElementById('article-popup');
         popup.classList.remove('active');
-        document.body.style.overflow = 'auto';
+        document.body.classList.remove('popup-open');
+        
+        // Reset any inline styles that might have been applied
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
     }
 
     function toggleAllArticles() {
